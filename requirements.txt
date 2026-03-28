@@ -1,5 +1,8 @@
-flask
+Flask
 gunicorn
 openai
 python-dotenv
 flask-cors
+PyPDF2
+python-docx
+spacy
