@@ -1,9 +1,0 @@
-Flask
-gunicorn
-openai
-python-dotenv
-flask-cors
-PyPDF2
-python-docx
-spacy
-en_core_web_sm
