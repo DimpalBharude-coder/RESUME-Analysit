@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Analyzer AI</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    color:white;
+    text-align:center;
+}
+
+.container { margin-top:50px; }
+
+input {
+    padding:10px;
+    margin:10px;
+}
+
+button {
+    padding:10px 20px;
+    border:none;
+    background:#667eea;
+    color:white;
+    cursor:pointer;
+}
+
+.results {
+    background:white;
+    color:black;
+    margin-top:20px;
+    padding:20px;
+    border-radius:10px;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Resume Analyzer AI</h1>
+
+<input type="file" id="fileInput">
+<br>
+<button onclick="uploadResume()">Analyze Resume</button>
+
+<div class="results" id="results">
+    <h2>ATS Score: <span id="score"></span></h2>
+    <pre id="aiResult"></pre>
+</div>
+
+</div>
+
+<script>
+async function uploadResume() {
+    const fileInput = document.getElementById("fileInput");
+
+    if (!fileInput.files[0]) {
+        alert("Please upload a file");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("resume", fileInput.files[0]);
+
+    const res = await fetch("/analyze", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        document.getElementById("results").style.display = "block";
+        document.getElementById("score").innerText = data.score;
+        document.getElementById("aiResult").innerText = data.ai_analysis;
+    } else {
+        alert(data.error);
+    }
+}
+</script>
+
+</body>
+</html>
